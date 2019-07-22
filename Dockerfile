@@ -5,7 +5,7 @@
 #
 # Stage 1/2: Build BI Server
 #
-FROM maven:3.5.0-jdk-8 as builder
+FROM maven:3.5.0-jdk-8
 
 ENV BISERVER_RELEASE=8.3.0.0 BISERVER_BUILD=371 BISERVER_HOME=/pentaho-server \
 	ECLIPSE_SWT_VERSION=4.6 SYSLOG4J_VERSION=0.9.46
@@ -80,7 +80,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy Pentaho server files
-COPY --from=builder /pentaho-server $BISERVER_HOME
+COPY --from=maven:3.5.0-jdk-8 /pentaho-server $BISERVER_HOME
 
 # Change work directory
 WORKDIR $BISERVER_HOME
