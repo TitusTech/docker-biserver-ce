@@ -7,7 +7,7 @@
 #
 FROM maven:3.5.0-jdk-8 as builder
 
-ENV BISERVER_RELEASE=8.0.0.0 BISERVER_BUILD=1 BISERVER_HOME=/pentaho-server \
+ENV BISERVER_RELEASE=8.3.0.0 BISERVER_BUILD=371 BISERVER_HOME=/pentaho-server \
 	ECLIPSE_SWT_VERSION=4.6 SYSLOG4J_VERSION=0.9.46
 ENV BISERVER_VERSION=$BISERVER_RELEASE-$BISERVER_BUILD
 
@@ -65,7 +65,7 @@ FROM zhicwu/java:8
 MAINTAINER Zhichun Wu <zhicwu@gmail.com>
 
 # Set environment variables
-ENV BISERVER_VERSION=8.0.0.0-1 \
+ENV BISERVER_VERSION=8.3.0.0-371 \
 	BISERVER_HOME=/biserver-ce KETTLE_HOME=/biserver-ce/pentaho-solutions/system/kettle
 
 # Set label
