@@ -45,7 +45,7 @@ RUN apt-get update \
 	&& make install \
 	&& rm -f $BISERVER_HOME/tomcat/bin/tomcat-native.tar.gz \
 	&& cd /tmp/build \
-	&& wget https://www.openssl.org/source/openssl-1.1.0f.tar.gz \
+	&& wget https://www.openssl.org/source/openssl-1.1.1h.tar.gz \
 	&& tar zxf openssl-1.1*.tar.gz \
 	&& cd openssl-1.1* \
 	&& ./config -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)' \
