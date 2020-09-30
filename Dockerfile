@@ -3,7 +3,7 @@
 #
 
 # Pull base image
-FROM docker.peopleware.do:5000/biserver:8.3-base
+FROM docker.peopleware.do:5000/biserver:9.0-base
 
 # Set maintainer
 MAINTAINER Zhichun Wu <zhicwu@gmail.com>
