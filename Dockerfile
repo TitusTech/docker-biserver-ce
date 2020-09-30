@@ -9,7 +9,7 @@ ENV BISERVER_RELEASE=9.1.0.0 BISERVER_BUILD=324 BISERVER_HOME=/pentaho-server \
 	ECLIPSE_SWT_VERSION=4.6 SYSLOG4J_VERSION=0.9.46
 ENV BISERVER_VERSION=$BISERVER_RELEASE-$BISERVER_BUILD
 RUN apt-get update \
-	&& apt-get install -y libapr1 libaprutil1 libapr1-dev libssl-dev gcc make \
+	&& apt-get install -y libc6 libapr1 libaprutil1 libapr1-dev libssl-dev gcc make \
 	&& mkdir -p ~/.m2 \
 	&& wget --progress=dot:giga -P /root/.m2/ https://raw.githubusercontent.com/pentaho/maven-parent-poms/master/maven-support-files/settings.xml \
 	&& wget --progress=dot:giga https://github.com/pentaho/pentaho-platform/archive/$BISERVER_RELEASE-R.tar.gz \
