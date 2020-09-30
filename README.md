@@ -25,7 +25,9 @@ Now you should be able to access Pentaho Server at http://localhost:8080
 
 ## How to Build
 ```
-$ git clone https://github.com/zhicwu/docker-biserver-ce.git -b 8.0-base --single-branch
+$ git clone https://github.com/peoplewareDo/docker-biserver-ce.git -b 9.0-base --single-branch
 $ cd docker-biserver-ce
-$ docker build -t my/biserver:8.0 .
+$ docker build -t my/biserver:9.0 .
 ```
+
+sudo docker build -t docker.peopleware.do:5000/biserver:9.0-base .
