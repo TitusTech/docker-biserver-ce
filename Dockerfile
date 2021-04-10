@@ -5,8 +5,12 @@
 #
 FROM maven:3.6.3-jdk-8 as builder
 
-ENV BISERVER_RELEASE=9.1.0.0 BISERVER_BUILD=324 BISERVER_HOME=/pentaho-server \
-	ECLIPSE_SWT_VERSION=4.6 SYSLOG4J_VERSION=0.9.46
+ENV BISERVER_RELEASE=9.1.0.0 \
+	BISERVER_BUILD=324 \
+	BISERVER_HOME=/pentaho-server \
+	ECLIPSE_SWT_VERSION=4.6 \
+	SYSLOG4J_VERSION=0.9.46 \
+	KARAF_ASSEMBLY_VER=8.3.0.23-1230
 ENV BISERVER_VERSION=$BISERVER_RELEASE-$BISERVER_BUILD
 RUN apt-get update \
 	&& apt-get install -y libc6 libapr1 libaprutil1 libapr1-dev libssl-dev gcc make \
@@ -15,13 +19,13 @@ RUN apt-get update \
 	&& wget --progress=dot:giga https://github.com/pentaho/pentaho-platform/archive/$BISERVER_RELEASE-R.tar.gz \
 		https://github.com/maven-eclipse/maven-eclipse.github.io/raw/master/maven/org/eclipse/swt/org.eclipse.swt.gtk.linux.x86_64/$ECLIPSE_SWT_VERSION/org.eclipse.swt.gtk.linux.x86_64-$ECLIPSE_SWT_VERSION.jar \
 		http://clojars.org/repo/org/syslog4j/syslog4j/$SYSLOG4J_VERSION/syslog4j-$SYSLOG4J_VERSION.jar \
-	&& wget --timeout=10 --waitretry=2 --tries=50 --retry-connrefused --progress=dot:giga https://public.nexus.pentaho.org/content/groups/omni/pentaho/pentaho-karaf-assembly/8.3.0.16-990/pentaho-karaf-assembly-8.3.0.16-990-client.zip \
+	&& wget --timeout=10 --waitretry=2 --tries=50 --retry-connrefused --progress=dot:giga https://public.nexus.pentaho.org/content/groups/omni/pentaho/pentaho-karaf-assembly/$KARAF_ASSEMBLY_VER/pentaho-karaf-assembly-$KARAF_ASSEMBLY_VER-client.zip \
 		https://public.nexus.pentaho.org/content/groups/omni/pentaho/pentaho-big-data-plugin/$BISERVER_VERSION/pentaho-big-data-plugin-$BISERVER_VERSION.zip \
 	&& mvn install:install-file -Dfile=pentaho-big-data-plugin-$BISERVER_VERSION.zip -DgroupId=pentaho -DartifactId=pentaho-big-data-plugin -Dversion=$BISERVER_VERSION -Dpackaging=zip \
-	&& mvn install:install-file -Dfile=pentaho-karaf-assembly-8.3.0.16-990-client.zip -DgroupId=pentaho -DartifactId=pentaho-karaf-assembly -Dversion=8.3.0.16-990 -Dpackaging=zip \
+	&& mvn install:install-file -Dfile=pentaho-karaf-assembly-$KARAF_ASSEMBLY_VER-client.zip -DgroupId=pentaho -DartifactId=pentaho-karaf-assembly -Dversion=$KARAF_ASSEMBLY_VER -Dpackaging=zip \
 	&& mvn install:install-file -Dfile=org.eclipse.swt.gtk.linux.x86_64-$ECLIPSE_SWT_VERSION.jar -DgroupId=org.eclipse.swt -DartifactId=org.eclipse.swt.gtk.linux.x86_64 -Dversion=$ECLIPSE_SWT_VERSION -Dpackaging=jar \
 	&& mvn install:install-file -Dfile=syslog4j-$SYSLOG4J_VERSION.jar -DgroupId=org.syslog4j -DartifactId=syslog4j -Dversion=$SYSLOG4J_VERSION -Dpackaging=jar \
-	&& sed -i -e 's|\(/packaging>\)|\1\n  <classifier>client</classifier>|' /root/.m2/repository/pentaho/pentaho-karaf-assembly/8.3.0.16-990/pentaho-karaf-assembly-8.3.0.16-990.pom \
+	&& sed -i -e 's|\(/packaging>\)|\1\n  <classifier>client</classifier>|' /root/.m2/repository/pentaho/pentaho-karaf-assembly/$KARAF_ASSEMBLY_VER/pentaho-karaf-assembly-$KARAF_ASSEMBLY_VER.pom \
 	&& tar zxf $BISERVER_RELEASE-R.tar.gz \
 	&& cd pentaho-platform-$BISERVER_RELEASE-R \
 	&& sed -i -e 's|<artifactId>tomcat-windows-x64</artifactId>|<artifactId>tomcat</artifactId>|' assemblies/pentaho-server/pom.xml \
@@ -62,8 +66,8 @@ FROM zhicwu/java:8
 MAINTAINER Zhichun Wu <zhicwu@gmail.com>
 
 # Set environment variables
-ENV BISERVER_VERSION=9.1.0.0-324 \
-	BISERVER_HOME=/biserver-ce KETTLE_HOME=/biserver-ce/pentaho-solutions/system/kettle
+ENV BISERVER_HOME=/biserver-ce \
+	KETTLE_HOME=/biserver-ce/pentaho-solutions/system/kettle
 
 # Set label
 LABEL java_server="Pentaho Server $BISERVER_VERSION Community Edition"
