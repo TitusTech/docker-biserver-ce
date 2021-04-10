@@ -63,7 +63,7 @@ RUN apt-get update \
 FROM zhicwu/java:8
 
 # Set maintainer
-MAINTAINER Zhichun Wu <zhicwu@gmail.com>
+MAINTAINER Robert Mikes <robert@mikes.hu>
 
 # Set environment variables
 ENV BISERVER_HOME=/biserver-ce \
