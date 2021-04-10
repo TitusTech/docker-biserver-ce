@@ -9,7 +9,7 @@ ubuntu:16.04
     |
     |--- zhicwu/java:8
       |
-      |--- zhicwu/biserver-ce:8.0-base
+      |--- taurus227/docker-biserver-ce:9.1
 ```
 * Official Ubuntu 16.04 LTS docker image
 * [Phusion Base Image](https://github.com/phusion/baseimage-docker) 0.9.22
